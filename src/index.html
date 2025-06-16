@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1.0"
+		/>
+		<link
+			rel="stylesheet"
+			href="css/index.css"
+		/>
+		<title>Document</title>
+	</head>
+	<body>
+		<input
+			id="clientInput"
+			class="px-4 py-1 border mb-2 rounded-md outline-none"
+			type="text"
+		/>
+		<input
+			id="bai9Input"
+			class="px-4 py-1 border mb-2 rounded-md outline-none"
+			placeholder="bai9"
+			type="text"
+		/>
+		<div>Integer</div>
+		<div
+			id="arrNumber"
+			class="px-4 py-1 bg-black text-white"
+		></div>
+		<div>Float</div>
+		<div
+			id="arrNumber"
+			class="px-4 py-1 bg-black text-white"
+		></div>
+
+		<div></div>
+		<script>
+			const input = document.getElementById("clientInput");
+			const arrNumber = document.getElementById("arrNumber");
+			const arr = [0];
+
+			input.addEventListener("keypress", (e) => {
+				const key = e.key;
+				if (!/[0-9\-+]/.test(key)) {
+					e.preventDefault();
+				}
+			});
+			document.addEventListener("keydown", (e) => {
+				if (e.key === "Enter" && document.activeElement === input) {
+					const currentValue = input.value;
+					if (isNaN(currentValue)) alert("Must be a number!!!");
+					else {
+						arr.push(Number(currentValue));
+						input.value = "";
+						arrNumber.innerHTML = arr;
+					}
+				}
+			});
+			function bai1(arr) {
+				const res = arr.reduce((pre, curr) => {
+					if (curr >= 0) return pre + curr;
+					return pre;
+				}, 0);
+				return res;
+			}
+			function bai2(arr) {
+				const res = arr.reduce((pre, curr) => {
+					if (curr >= 0) return pre + 1;
+					return pre;
+				}, 0);
+				return res;
+			}
+			function bai3(arr) {
+				const res = arr.reduce((pre, curr) => {
+					if (curr <= pre) return curr;
+					return pre;
+				}, arr[0]);
+				return res;
+			}
+			function bai4(arr) {
+				const filtered = arr.filter((item) => item >= 0);
+				const res = filtered.reduce((pre, curr) => {
+					if (curr <= pre) return curr;
+					return pre;
+				}, filtered[0]);
+				return res;
+			}
+			function bai5(arr) {
+				const filtered = arr.filter((item) => item % 2 === 0);
+				return filtered.length > 0 ? filtered[filtered.length - 1] : -1;
+			}
+			function bai6(arr, swap1, swap2) {
+				const temp = arr[swap2];
+				arr[swap2] = arr[swap1];
+				arr[swap1] = temp;
+				return arr;
+			}
+			function bai7(arr) {
+				const res = arr.sort((a, b) => a - b);
+				return res;
+			}
+
+			function bai8(arr) {
+				let res = undefined;
+				for (let i = 0; i < arr.length; i++) {
+					if (arr[i] === 0) continue;
+					const absoluteValue = Math.abs(arr[i]);
+					for (let y = absoluteValue - 1; y > 0; y--) {
+						if (y === 1) {
+							res = arr[i];
+							break;
+						}
+						if (arr[i] % y === 0) {
+							break;
+						}
+					}
+					if (res) break;
+				}
+				return res ? res : -1;
+			}
+			function bai9(arr, additionalArr) {
+				const floatParsed = arr.map((item) => parseFloat(item));
+				const newArr = [...floatParsed, ...additionalArr];
+				const filterInteger = newArr.filter(
+					(item) => item - parseInt(item) === 0
+				);
+				return filterInteger.length;
+			}
+			function bai10(arr) {
+				const filterNegative = arr.filter((item) => item < 0);
+				const filterPositive = arr.filter((item) => item >= 0);
+				return filterPositive.length > filterNegative.length
+					? "Positive"
+					: "Negative";
+			}
+			arrNumber.innerText = bai9(arr, [3.1, 2.3, 2]);
+		</script>
+	</body>
+</html>
