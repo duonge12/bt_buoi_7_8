@@ -1,141 +1,108 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 	<head>
 		<meta charset="UTF-8" />
 		<meta
 			name="viewport"
 			content="width=device-width, initial-scale=1.0"
 		/>
+		<title>Xử lý Mảng Số Nguyên</title>
 		<link
 			rel="stylesheet"
 			href="css/index.css"
 		/>
-		<title>Document</title>
 	</head>
 	<body>
-		<input
-			id="clientInput"
-			class="px-4 py-1 border mb-2 rounded-md outline-none"
-			type="text"
-		/>
-		<input
-			id="bai9Input"
-			class="px-4 py-1 border mb-2 rounded-md outline-none"
-			placeholder="bai9"
-			type="text"
-		/>
-		<div>Integer</div>
-		<div
-			id="arrNumber"
-			class="px-4 py-1 bg-black text-white"
-		></div>
-		<div>Float</div>
-		<div
-			id="arrNumber"
-			class="px-4 py-1 bg-black text-white"
-		></div>
+		<div class="container">
+			<h1>Xử lý Mảng Số Nguyên</h1>
 
-		<div></div>
-		<script>
-			const input = document.getElementById("clientInput");
-			const arrNumber = document.getElementById("arrNumber");
-			const arr = [0];
+			<div class="integerCard">
+				<div>
+					<label for="numberInput"
+						>Nhập số nguyên (cách nhau bởi dấu phẩy):</label
+					>
+					<input
+						type="text"
+						id="numberInput"
+						placeholder="Ví dụ: 1, -3, 5, 6, 8"
+					/>
+					<p class="message">KHÔNG HỢP LỆ</p>
+				</div>
+				<div>
+					<button id="submitArrayButton">Lưu mảng</button>
+					<button id="clearArray">Xoá mảng</button>
+					<div class="submittedArrValue"></div>
+				</div>
+			</div>
 
-			input.addEventListener("keypress", (e) => {
-				const key = e.key;
-				if (!/[0-9\-+]/.test(key)) {
-					e.preventDefault();
-				}
-			});
-			document.addEventListener("keydown", (e) => {
-				if (e.key === "Enter" && document.activeElement === input) {
-					const currentValue = input.value;
-					if (isNaN(currentValue)) alert("Must be a number!!!");
-					else {
-						arr.push(Number(currentValue));
-						input.value = "";
-						arrNumber.innerHTML = arr;
-					}
-				}
-			});
-			function bai1(arr) {
-				const res = arr.reduce((pre, curr) => {
-					if (curr >= 0) return pre + curr;
-					return pre;
-				}, 0);
-				return res;
-			}
-			function bai2(arr) {
-				const res = arr.reduce((pre, curr) => {
-					if (curr >= 0) return pre + 1;
-					return pre;
-				}, 0);
-				return res;
-			}
-			function bai3(arr) {
-				const res = arr.reduce((pre, curr) => {
-					if (curr <= pre) return curr;
-					return pre;
-				}, arr[0]);
-				return res;
-			}
-			function bai4(arr) {
-				const filtered = arr.filter((item) => item >= 0);
-				const res = filtered.reduce((pre, curr) => {
-					if (curr <= pre) return curr;
-					return pre;
-				}, filtered[0]);
-				return res;
-			}
-			function bai5(arr) {
-				const filtered = arr.filter((item) => item % 2 === 0);
-				return filtered.length > 0 ? filtered[filtered.length - 1] : -1;
-			}
-			function bai6(arr, swap1, swap2) {
-				const temp = arr[swap2];
-				arr[swap2] = arr[swap1];
-				arr[swap1] = temp;
-				return arr;
-			}
-			function bai7(arr) {
-				const res = arr.sort((a, b) => a - b);
-				return res;
-			}
+			<div class="functions">
+				<h2>Chọn chức năng:</h2>
+				<select
+					id="functionSelect"
+					class="error"
+					disabled="true"
+				>
+					<option value="1">1. Tổng các số dương</option>
+					<option value="2">2. Đếm số dương</option>
+					<option value="3">3. Tìm số nhỏ nhất</option>
+					<option value="4">4. Tìm số dương nhỏ nhất</option>
+					<option value="5">5. Tìm số chẵn cuối cùng</option>
+					<option value="6">6. Đổi chỗ 2 giá trị</option>
+					<option value="7">7. Sắp xếp tăng dần</option>
+					<option value="8">8. Tìm số nguyên tố đầu tiên</option>
+					<option value="9">
+						9. Nhập thêm mảng số thực & đếm số nguyên
+					</option>
+					<option value="10">
+						10. So sánh số lượng số dương và số âm
+					</option>
+				</select>
 
-			function bai8(arr) {
-				let res = undefined;
-				for (let i = 0; i < arr.length; i++) {
-					if (arr[i] === 0) continue;
-					const absoluteValue = Math.abs(arr[i]);
-					for (let y = absoluteValue - 1; y > 0; y--) {
-						if (y === 1) {
-							res = arr[i];
-							break;
-						}
-						if (arr[i] % y === 0) {
-							break;
-						}
-					}
-					if (res) break;
-				}
-				return res ? res : -1;
-			}
-			function bai9(arr, additionalArr) {
-				const floatParsed = arr.map((item) => parseFloat(item));
-				const newArr = [...floatParsed, ...additionalArr];
-				const filterInteger = newArr.filter(
-					(item) => item - parseInt(item) === 0
-				);
-				return filterInteger.length;
-			}
-			function bai10(arr) {
-				const filterNegative = arr.filter((item) => item < 0);
-				const filterPositive = arr.filter((item) => item >= 0);
-				return filterPositive.length > filterNegative.length
-					? "Positive"
-					: "Negative";
-			}
-			arrNumber.innerText = bai9(arr, [3.1, 2.3, 2]);
-		</script>
+				<div class="bai6Card">
+					<input
+						type="text"
+						id="extraInput1"
+						placeholder="Vị trí 1 (ví dụ: 0)"
+					/>
+					<input
+						type="text"
+						id="extraInput2"
+						placeholder="Vị trí 2 (ví dụ: 3)"
+					/>
+				</div>
+				<div class="bai9Card">
+					<div class="float_section">
+						<label for="floatInput"
+							>Nhập số thực (cách nhau bởi dấu phẩy):</label
+						>
+						<input
+							type="text"
+							id="floatInput"
+							placeholder="Ví dụ: 1, -3.3, 5.1, 6, 8"
+						/>
+					</div>
+					<div>
+						<button id="submitFloatArrayButton">Lưu mảng</button>
+						<button id="clearFloatArray">Xoá mảng</button>
+						<div class="submittedFloatArrValue"></div>
+					</div>
+				</div>
+
+				<button
+					id="executeFunction"
+					class="error"
+					disabled="true"
+				>
+					Thực hiện
+				</button>
+			</div>
+
+			<div class="result">
+				<h2>Kết quả:</h2>
+				<p id="resultOutput">Chưa có kết quả</p>
+			</div>
+		</div>
+
+		<script src="js/index.js"></script>
 	</body>
 </html>
